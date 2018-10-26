@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void onEqualClicked() {
-
+        mInputTV.setText(String.valueOf(mCalculation.getResult()));
     }
 
     private void displayInput() {
