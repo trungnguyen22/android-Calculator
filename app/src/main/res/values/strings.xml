@@ -29,7 +29,7 @@
     <string name="mul" translatable="false">*</string>
     <string name="mul_x" translatable="false">×</string>
     <string name="plus" translatable="false">+</string>
-    <string name="minus" translatable="false">−</string>
+    <string name="minus" translatable="false">-</string>
     <string name="equal" translatable="false">=</string>
 
     <string name="sin" translatable="false">sin</string>
@@ -49,7 +49,7 @@
 
     <string name="all_clear" translatable="false">AC</string>
     <string name="positive_negative_toggle">+/-</string>
-    <string name="comma">,</string>
+    <string name="comma">.</string>
 
 
 </resources>

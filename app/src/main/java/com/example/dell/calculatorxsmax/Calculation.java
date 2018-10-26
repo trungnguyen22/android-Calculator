@@ -3,36 +3,50 @@ package com.example.dell.calculatorxsmax;
 import android.text.TextUtils;
 
 public class Calculation {
-    private String mVarA;
-    private String mVarB;
-    private String mResult;
-
+    private double mVarTemp;
+    private double mVarA;
+    private double mResult;
     private EOperator mEOperator;
-
     private boolean isReadyForCalculation;
 
-    public String getVarA() {
+    private CalculationCallBack mCalculationCallBack;
+
+    public Calculation() {
+        this.mVarA = 0;
+        this.mResult = 0;
+        this.mEOperator = EOperator.DEFAULT;
+    }
+
+    public double getVarA() {
         return mVarA;
     }
 
-    public void setVarA(String varA) {
+    public void setVarA(double varA) {
         mVarA = varA;
     }
 
-    public String getVarB() {
-        return mVarB;
+    public void setVarA(String varA) {
+        try {
+            this.mVarA = Double.parseDouble(varA);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setVarB(String varB) {
-        mVarB = varB;
-    }
-
-    public String getResult() {
+    public double getResult() {
         return mResult;
     }
 
-    public void setResult(String result) {
+    public void setResult(double result) {
         mResult = result;
+    }
+
+    public double getVarTemp() {
+        return mVarTemp;
+    }
+
+    public void setVarTemp(double varTemp) {
+        mVarTemp = varTemp;
     }
 
     public EOperator getEOperator() {
@@ -45,10 +59,6 @@ public class Calculation {
 
     /* End getter & setter methods */
 
-    public boolean isVarAEmpty() {
-        return TextUtils.isEmpty(mVarA);
-    }
-
     public boolean isReadyForCalculation() {
         return isReadyForCalculation;
     }
@@ -57,28 +67,50 @@ public class Calculation {
         isReadyForCalculation = readyForCalculation;
     }
 
+    public CalculationCallBack getCalculationCallBack() {
+        return mCalculationCallBack;
+    }
+
+    public void setCalculationCallBack(CalculationCallBack calculationCallBack) {
+        mCalculationCallBack = calculationCallBack;
+    }
+
     public void doCalculation() throws NumberFormatException {
-        if (isReadyForCalculation) {
-            double result = 0;
-            switch (mEOperator) {
-                case PLUS:
-                    result = Double.parseDouble(mVarA) + Double.parseDouble(mVarB);
-                    break;
-                case MINUS:
-                    result = Double.parseDouble(mVarA) - Double.parseDouble(mVarB);
-                    break;
-                case MUL:
-                    result = Double.parseDouble(mVarA) * Double.parseDouble(mVarB);
-                    break;
-                case DIVISION:
-                    result = Double.parseDouble(mVarA) / Double.parseDouble(mVarB);
-                    break;
-            }
-            mResult = String.valueOf(result);
+        switch (mEOperator) {
+            case PLUS:
+                mResult = mVarTemp + mVarA;
+                break;
+            case MINUS:
+                mResult = mVarTemp - mVarA;
+                break;
+            case MUL:
+                mResult = mVarTemp * mVarA;
+                break;
+            case DIVISION:
+                if (mVarA != 0) {
+                    mResult = mVarTemp / mVarA;
+                } else {
+                    mCalculationCallBack.onError("You can't divide by 0");
+                }
+                break;
+            default:
+                mVarTemp = mVarA;
+                mResult = mVarA;
+                return;
         }
+        if (mVarTemp != mVarA)
+            mCalculationCallBack.showResult(String.valueOf(mResult));
+    }
+
+    public void resetAll() {
+        mVarA = 0;
+        mResult = 0;
+        mEOperator = EOperator.DEFAULT;
+        mCalculationCallBack.onReset();
     }
 
     enum EOperator {
+        DEFAULT(""),
         PLUS("+"),
         MINUS("-"),
         DIVISION("÷"),
@@ -106,7 +138,7 @@ public class Calculation {
                     }
                 }
             }
-            return null;
+            return DEFAULT;
         }
     }
 

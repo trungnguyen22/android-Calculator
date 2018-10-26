@@ -2,22 +2,26 @@ package com.example.dell.calculatorxsmax;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import net.objecthunter.exp4j.Expression;
-import net.objecthunter.exp4j.ExpressionBuilder;
+public class MainActivity extends AppCompatActivity implements
+        View.OnClickListener, CalculationCallBack {
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
+    // View members
     TextView mInputTV;
     TextView mResultTV;
 
+    // Data Members
     Calculation mCalculation;
 
-    String displayCalculation;
+    String mVarA;
+    String mStorePreviousNumber;
 
-    Expression mExpression;
+    String displayCalculation;
 
     private int[] mListDigitButtonID = {
             R.id.mDigitOneBtn, R.id.mDigitTwoBtn,
@@ -43,8 +47,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initData() {
+        mVarA = "";
         displayCalculation = "";
         mCalculation = new Calculation();
+        mCalculation.setCalculationCallBack(this);
     }
 
     private void bindViews() {
@@ -80,9 +86,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.mMinusBtn:
             case R.id.mDivisionBtn:
             case R.id.mMulBtn:
-            case R.id.mCommaBtn:
-                String operator = (String) findViewById(v.getId()).getTag();
+                String operator = ((Button) findViewById(v.getId())).getText().toString();
                 onOperatorClicked(operator);
+                break;
+            case R.id.mCommaBtn:
+                onCommaButtonClicked();
                 break;
             case R.id.mEqualBtn:
                 onEqualClicked();
@@ -93,16 +101,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void onDigitNumberButtonClicked(String number) {
+    private void onCommaButtonClicked() {
+        if (!TextUtils.isEmpty(mVarA)) {
+            mVarA += ".";
+            displayCalculation += ".";
+            displayInput();
+        }
+    }
 
+    private void onDigitNumberButtonClicked(String number) throws NumberFormatException {
+        if (!TextUtils.isEmpty(mVarA)) {
+            if (Double.parseDouble(mVarA) == 0 && Double.parseDouble(number) == 0) {
+                return;
+            }
+        }
+        mVarA += number;
+        displayCalculation += number;
+        displayInput();
+        doCalculation();
     }
 
     private void onOperatorClicked(String operator) {
+        if (!TextUtils.isEmpty(mVarA)) {
+            mCalculation.setEOperator(Calculation.EOperator.from(operator));
+            mStorePreviousNumber = mVarA;
+            mVarA = "";
 
+            mCalculation.setVarTemp(mCalculation.getResult());
+            double result = mCalculation.getResult();
+            if ((result == Math.floor(result)) && !Double.isInfinite(result)) {
+                // integer type
+                displayCalculation = (int) result + operator;
+            } else {
+                displayCalculation = result + operator;
+            }
+            displayInput();
+        }
     }
 
     private void onClearClicked() {
-
+        mCalculation.resetAll();
     }
 
     private void onEqualClicked() {
@@ -113,9 +151,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mInputTV.setText(displayCalculation);
     }
 
-    private void displayResult() {
-        mExpression = new ExpressionBuilder(displayCalculation).build();
-        mResultTV.setText(String.valueOf(mExpression.evaluate()));
+    private void doCalculation() {
+        mCalculation.setVarA(mVarA);
+        mCalculation.doCalculation();
     }
 
+    @Override
+    public void showResult(String result) {
+        mResultTV.setText("Result: " + result);
+    }
+
+    @Override
+    public void onError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onReset() {
+        displayCalculation = "";
+        mVarA = "";
+        mInputTV.setText("");
+        mResultTV.setText("");
+    }
 }
