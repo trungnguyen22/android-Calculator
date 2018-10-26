@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Calculator XS Max</string>
+
+    <string name="percentage" translatable="false">%</string>
+    <string name="mod" translatable="false">mod</string>
+    <string name="hex" translatable="false">Hex</string>
+    <string name="bin" translatable="false">Bin</string>
+    <string name="dec" translatable="false">Dec</string>
+    <string name="oct" translatable="false">Oct</string>
+    <string name="dot" translatable="false">.</string>
+
+    <string name="digit0" translatable="false">0</string>
+    <string name="digit1" translatable="false">1</string>
+    <string name="digit2" translatable="false">2</string>
+    <string name="digit3" translatable="false">3</string>
+    <string name="digit4" translatable="false">4</string>
+    <string name="digit5" translatable="false">5</string>
+    <string name="digit6" translatable="false">6</string>
+    <string name="digit7" translatable="false">7</string>
+    <string name="digit8" translatable="false">8</string>
+    <string name="digit9" translatable="false">9</string>
+    <string name="pi_symbol" translatable="false">π</string>
+
+    <string name="delete" translatable="false">DEL</string>
+    <string name="clear" translatable="false">CLR</string>
+
+    <string name="div" translatable="false">/</string>
+    <string name="divider_" translatable="false">÷</string>
+    <string name="mul" translatable="false">*</string>
+    <string name="mul_x" translatable="false">×</string>
+    <string name="plus" translatable="false">+</string>
+    <string name="minus" translatable="false">−</string>
+    <string name="equal" translatable="false">=</string>
+
+    <string name="sin" translatable="false">sin</string>
+    <string name="cos" translatable="false">cos</string>
+    <string name="tan" translatable="false">tan</string>
+    <string name="constant_e" translatable="false">E</string>
+    <string name="ln" translatable="false">ln</string>
+    <string name="log10" translatable="false">log10</string>
+    <string name="exp" translatable="false">exp</string>
+
+    <string name="leftParen" translatable="false">(</string>
+    <string name="rightParen" translatable="false">)</string>
+
+    <string name="sqrt_sym" translatable="false">√</string>
+    <string name="factorial" translatable="false">!</string>
+    <string name="power" translatable="false">^</string>
+
+    <string name="all_clear" translatable="false">AC</string>
+    <string name="positive_negative_toggle">+/-</string>
+    <string name="comma">,</string>
+
+
+</resources>

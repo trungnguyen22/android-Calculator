@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:orientation="vertical"
+        tools:ignore="UselessLeaf">
+
+        <TextView
+            android:id="@+id/mInPutTV"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:textAlignment="textEnd"
+            android:textColor="@android:color/white"
+            android:textSize="48sp"
+            tools:ignore="NestedWeights"
+            tools:text="5,000,000 / 5,000" />
+
+        <TextView
+            android:id="@+id/mResultTV"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:textAlignment="textEnd"
+            android:textColor="@color/gray_28"
+            android:textSize="20sp"
+            tools:text="5,000,000 / 5,000" />
+
+    </LinearLayout>
+    <!-- End of display section -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:orientation="vertical"
+        tools:ignore="UselessLeaf">
+
+        <!-- Row 1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:ignore="NestedWeights">
+
+            <!-- First button -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                tools:ignore="NestedWeights">
+
+                <Button
+                    android:id="@+id/mClearBtn"
+                    style="@style/CalcButtonStyle"
+                    android:background="@drawable/rect_button_gray_65_selector"
+                    android:text="@string/all_clear" />
+            </LinearLayout>
+
+            <!-- Second button -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mPositiveNegativeToggleBtn"
+                    style="@style/CalcButtonStyle"
+                    android:background="@drawable/rect_button_gray_65_selector"
+                    android:text="@string/positive_negative_toggle" />
+            </LinearLayout>
+
+            <!-- Third button -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mPercentageBtn"
+                    style="@style/CalcButtonStyle"
+                    android:background="@drawable/rect_button_gray_65_selector"
+                    android:text="@string/percentage" />
+            </LinearLayout>
+
+            <!-- Fourth button -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mDivisionBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_orange_selector"
+                    android:tag="/"
+                    android:text="@string/divider_" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <!-- /.End of first row -->
+
+        <!-- Second row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mDigitSevenBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_gray_20_selector"
+                    android:tag="7"
+                    android:text="@string/digit7"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mDigitEightBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_gray_20_selector"
+                    android:tag="8"
+                    android:text="@string/digit8" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mDigitNineBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_gray_20_selector"
+                    android:tag="9"
+                    android:text="@string/digit9" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mMulBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_orange_selector"
+                    android:tag="*"
+                    android:text="@string/mul_x" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <!-- /. End of second row -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mDigitFourBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_gray_20_selector"
+                    android:tag="4"
+                    android:text="@string/digit4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mDigitFiveBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_gray_20_selector"
+                    android:tag="5"
+                    android:text="@string/digit5" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mDigitSixBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_gray_20_selector"
+                    android:tag="6"
+                    android:text="@string/digit6" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mMinusBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_orange_selector"
+                    android:tag="-"
+                    android:text="@string/minus" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mDigitOneBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_gray_20_selector"
+                    android:tag="1"
+                    android:text="@string/digit1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mDigitTwoBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_gray_20_selector"
+                    android:tag="2"
+                    android:text="@string/digit2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mDigitThreeBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_gray_20_selector"
+                    android:tag="3"
+                    android:text="@string/digit3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mPlusBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_orange_selector"
+                    android:tag="+"
+                    android:text="@string/plus" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mDigitZeroBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rect_button_gray_20_selector"
+                    android:tag="0"
+                    android:text="@string/digit0"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    tools:ignore="NestedWeights">
+
+                    <Button
+                        android:id="@+id/mCommaBtn"
+                        style="@style/CalcButtonStyle.TextColorWhite"
+                        android:background="@drawable/rect_button_gray_20_selector"
+                        android:tag="."
+                        android:text="@string/comma" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/mEqualBtn"
+                        style="@style/CalcButtonStyle.TextColorWhite"
+                        android:background="@drawable/rect_button_orange_selector"
+                        android:text="@string/equal" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
