@@ -105,7 +105,7 @@ public class Calculation {
                 mResult = mVarA;
                 return;
         }
-        if (mVarTemp != mVarA)
+        if (mResult != mVarA)
             mCalculationCallBack.showResult(String.valueOf(mResult));
     }
 

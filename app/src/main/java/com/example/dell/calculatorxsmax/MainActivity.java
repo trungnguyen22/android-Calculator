@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements
 
     // Variable
     String displayCalculation;
+    String storeFirstString;
 
     private int[] mListDigitButtonID = {
             R.id.mDigitOneBtn, R.id.mDigitTwoBtn,
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.mPositiveNegativeToggleBtn:
                 if (!TextUtils.isEmpty(mVarA)) {
                     try {
-                        displayCalculation = displayCalculation.substring(0, displayCalculation.indexOf(mVarA));
+                        //displayCalculation = displayCalculation.substring(0, displayCalculation.indexOf(mVarA));
                         double varA = Double.parseDouble(mVarA);
                         if (varA > 0) {
                             mVarA = "-" + mVarA;
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements
                                 mVarA = String.valueOf(varA);
                         }
                         doCalculation();
-                        displayCalculation += mVarA;
+                        displayCalculation = storeFirstString + mVarA;
                         displayInput();
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
@@ -159,11 +160,13 @@ public class MainActivity extends AppCompatActivity implements
         mVarA = "";
         mCalculation.setVarTemp(mCalculation.getResult());
         double result = mCalculation.getResult();
-        if ((result == Math.floor(result)) && !Double.isInfinite(result)) {
+        if (NumberUtils.isIntegerNumber(result)) {
             // integer type
             displayCalculation = (int) result + mOperator;
+            storeFirstString = displayCalculation;
         } else {
             displayCalculation = result + mOperator;
+            storeFirstString = displayCalculation;
         }
         displayInput();
     }
@@ -173,7 +176,16 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void onEqualClicked() {
-        mInputTV.setText(String.valueOf(mCalculation.getResult()));
+
+        if (NumberUtils.isIntegerNumber(mCalculation.getResult())) {
+            mVarA = String.valueOf((int) mCalculation.getResult());
+        } else {
+            mVarA = String.valueOf(mCalculation.getResult());
+        }
+        displayCalculation = mVarA;
+        storeFirstString = "";
+        mInputTV.setText(mVarA);
+        mCalculation.setEOperator(Calculation.EOperator.DEFAULT);
     }
 
     private void displayInput() {
@@ -197,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onReset() {
+        storeFirstString = "";
         mOperator = "";
         displayCalculation = "";
         mVarA = "";
