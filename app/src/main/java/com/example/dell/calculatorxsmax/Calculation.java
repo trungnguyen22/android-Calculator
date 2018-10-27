@@ -93,6 +93,13 @@ public class Calculation {
                     mCalculationCallBack.onError("You can't divide by 0");
                 }
                 break;
+            case PERCENTAGE:
+                if (mVarA != 0) {
+                    mResult = mVarTemp % mVarA;
+                } else {
+                    mCalculationCallBack.onError("You can't divide by 0");
+                }
+                break;
             default:
                 mVarTemp = mVarA;
                 mResult = mVarA;
@@ -114,7 +121,8 @@ public class Calculation {
         PLUS("+"),
         MINUS("-"),
         DIVISION("÷"),
-        MUL("×");
+        MUL("×"),
+        PERCENTAGE("%");
 
         String type;
 

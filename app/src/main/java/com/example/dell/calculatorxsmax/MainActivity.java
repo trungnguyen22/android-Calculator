@@ -18,9 +18,13 @@ public class MainActivity extends AppCompatActivity implements
     // Data Members
     Calculation mCalculation;
 
+    // Logical member
+    String mOperator;
     String mVarA;
     String mStorePreviousNumber;
+    String mSign;
 
+    // Variable
     String displayCalculation;
 
     private int[] mListDigitButtonID = {
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements
     private int[] mListOperatorButtonID = {
             R.id.mPositiveNegativeToggleBtn, R.id.mDivisionBtn, R.id.mMulBtn,
             R.id.mMinusBtn, R.id.mPlusBtn, R.id.mCommaBtn,
-            R.id.mEqualBtn, R.id.mClearBtn
+            R.id.mPercentageBtn, R.id.mEqualBtn, R.id.mClearBtn
     };
 
     @Override
@@ -47,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void initData() {
+        mSign = "+";
+        mOperator = "";
         mVarA = "";
         displayCalculation = "";
         mCalculation = new Calculation();
@@ -86,8 +92,12 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.mMinusBtn:
             case R.id.mDivisionBtn:
             case R.id.mMulBtn:
-                String operator = ((Button) findViewById(v.getId())).getText().toString();
-                onOperatorClicked(operator);
+            case R.id.mPercentageBtn:
+                String newOperator = ((Button) findViewById(v.getId())).getText().toString();
+                if (!mOperator.equals(newOperator)) {
+                    mOperator = newOperator;
+                    onOperatorClicked();
+                }
                 break;
             case R.id.mCommaBtn:
                 onCommaButtonClicked();
@@ -97,6 +107,28 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.mClearBtn:
                 onClearClicked();
+                break;
+            case R.id.mPositiveNegativeToggleBtn:
+                if (!TextUtils.isEmpty(mVarA)) {
+                    try {
+                        displayCalculation = displayCalculation.substring(0, displayCalculation.indexOf(mVarA));
+                        double varA = Double.parseDouble(mVarA);
+                        if (varA > 0) {
+                            mVarA = "-" + mVarA;
+                        } else {
+                            varA = varA * (-1);
+                            if (NumberUtils.isIntegerNumber(varA))
+                                mVarA = String.valueOf((int) varA);
+                            else
+                                mVarA = String.valueOf(varA);
+                        }
+                        doCalculation();
+                        displayCalculation += mVarA;
+                        displayInput();
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
         }
     }
@@ -117,26 +149,23 @@ public class MainActivity extends AppCompatActivity implements
         }
         mVarA += number;
         displayCalculation += number;
-        displayInput();
+        mOperator = "";
         doCalculation();
+        displayInput();
     }
 
-    private void onOperatorClicked(String operator) {
-        if (!TextUtils.isEmpty(mVarA)) {
-            mCalculation.setEOperator(Calculation.EOperator.from(operator));
-            mStorePreviousNumber = mVarA;
-            mVarA = "";
-
-            mCalculation.setVarTemp(mCalculation.getResult());
-            double result = mCalculation.getResult();
-            if ((result == Math.floor(result)) && !Double.isInfinite(result)) {
-                // integer type
-                displayCalculation = (int) result + operator;
-            } else {
-                displayCalculation = result + operator;
-            }
-            displayInput();
+    private void onOperatorClicked() {
+        mCalculation.setEOperator(Calculation.EOperator.from(mOperator));
+        mVarA = "";
+        mCalculation.setVarTemp(mCalculation.getResult());
+        double result = mCalculation.getResult();
+        if ((result == Math.floor(result)) && !Double.isInfinite(result)) {
+            // integer type
+            displayCalculation = (int) result + mOperator;
+        } else {
+            displayCalculation = result + mOperator;
         }
+        displayInput();
     }
 
     private void onClearClicked() {
@@ -168,8 +197,10 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onReset() {
+        mOperator = "";
         displayCalculation = "";
         mVarA = "";
+        mStorePreviousNumber = "";
         mInputTV.setText("");
         mResultTV.setText("");
     }

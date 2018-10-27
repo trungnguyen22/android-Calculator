@@ -95,6 +95,7 @@
                     android:id="@+id/mPercentageBtn"
                     style="@style/CalcButtonStyle"
                     android:background="@drawable/rect_button_gray_65_selector"
+                    android:tag="%"
                     android:text="@string/percentage" />
             </LinearLayout>
 
