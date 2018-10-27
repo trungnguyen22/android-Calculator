@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements
     String mStorePreviousNumber;
     String mSign;
 
-    // Variable
+    // Two variable for showing input from user to screen
     String displayCalculation;
     String storeFirstString;
 
@@ -110,35 +110,8 @@ public class MainActivity extends AppCompatActivity implements
                 onClearClicked();
                 break;
             case R.id.mPositiveNegativeToggleBtn:
-                if (!TextUtils.isEmpty(mVarA)) {
-                    try {
-                        //displayCalculation = displayCalculation.substring(0, displayCalculation.indexOf(mVarA));
-                        double varA = Double.parseDouble(mVarA);
-                        if (varA > 0) {
-                            mVarA = "-" + mVarA;
-                        } else {
-                            varA = varA * (-1);
-                            if (NumberUtils.isIntegerNumber(varA))
-                                mVarA = String.valueOf((int) varA);
-                            else
-                                mVarA = String.valueOf(varA);
-                        }
-                        doCalculation();
-                        displayCalculation = storeFirstString + mVarA;
-                        displayInput();
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
-                    }
-                }
+                onToggleSignNumber();
                 break;
-        }
-    }
-
-    private void onCommaButtonClicked() {
-        if (!TextUtils.isEmpty(mVarA)) {
-            mVarA += ".";
-            displayCalculation += ".";
-            displayInput();
         }
     }
 
@@ -157,18 +130,51 @@ public class MainActivity extends AppCompatActivity implements
 
     private void onOperatorClicked() {
         mCalculation.setEOperator(Calculation.EOperator.from(mOperator));
-        mVarA = "";
         mCalculation.setVarTemp(mCalculation.getResult());
+
+        mVarA = "";
+
         double result = mCalculation.getResult();
         if (NumberUtils.isIntegerNumber(result)) {
-            // integer type
+            // cast to integer type
             displayCalculation = (int) result + mOperator;
-            storeFirstString = displayCalculation;
         } else {
             displayCalculation = result + mOperator;
-            storeFirstString = displayCalculation;
         }
+        // Store the first expression, for later use.
+        storeFirstString = displayCalculation;
         displayInput();
+    }
+
+    private void onToggleSignNumber() {
+        if (!TextUtils.isEmpty(mVarA)) {
+            try {
+                double varA = Double.parseDouble(mVarA);
+                if (varA > 0) {
+                    mVarA = "-" + mVarA;
+                } else {
+                    varA = varA * (-1);
+                    if (NumberUtils.isIntegerNumber(varA))
+                        mVarA = String.valueOf((int) varA);
+                    else
+                        mVarA = String.valueOf(varA);
+                }
+                doCalculation();
+                // update new expression
+                displayCalculation = storeFirstString + mVarA;
+                displayInput();
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void onCommaButtonClicked() {
+        if (!TextUtils.isEmpty(mVarA)) {
+            mVarA += ".";
+            displayCalculation += ".";
+            displayInput();
+        }
     }
 
     private void onClearClicked() {
@@ -187,6 +193,8 @@ public class MainActivity extends AppCompatActivity implements
         mInputTV.setText(mVarA);
         mCalculation.setEOperator(Calculation.EOperator.DEFAULT);
     }
+
+    /* End of onClick methods */
 
     private void displayInput() {
         mInputTV.setText(displayCalculation);
