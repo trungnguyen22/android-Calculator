@@ -29,6 +29,7 @@ public class Calculation {
         try {
             this.mVarA = Double.parseDouble(varA);
         } catch (NumberFormatException e) {
+            mCalculationCallBack.onError(e.getMessage());
             e.printStackTrace();
         }
     }

@@ -8,6 +8,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Project: Basic Calculator - FUNiX
+ * Author: Nguyen Quoc Trung
+ * Student ID: FX00077
+ * Created: 25/10/2018
+ */
+
 public class MainActivity extends AppCompatActivity implements
         View.OnClickListener, CalculationCallBack {
 
@@ -26,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements
 
     // Two variable for showing input from user to screen
     String displayCalculation;
-    String storeFirstString;
+    String storeFirstExpression;
 
     private int[] mListDigitButtonID = {
             R.id.mDigitOneBtn, R.id.mDigitTwoBtn,
@@ -56,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements
         mOperator = "";
         mVarA = "";
         displayCalculation = "";
+        storeFirstExpression = "";
+
+        // Object calculator is for saving result and doing calculation
         mCalculation = new Calculation();
         mCalculation.setCalculationCallBack(this);
     }
@@ -86,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.mDigitSevenBtn:
             case R.id.mDigitEightBtn:
             case R.id.mDigitNineBtn:
+                // Get the number as a string from the button by its tag
                 String number = (String) findViewById(v.getId()).getTag();
                 onDigitNumberButtonClicked(number);
                 break;
@@ -94,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.mDivisionBtn:
             case R.id.mMulBtn:
             case R.id.mPercentageBtn:
+                // Get the operator as a string from the button by its text
                 String newOperator = ((Button) findViewById(v.getId())).getText().toString();
                 if (!mOperator.equals(newOperator)) {
                     mOperator = newOperator;
@@ -115,6 +127,11 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * Handle click event when user click on digit number button.
+     *
+     * @param number - is the number of the digit number button clicked on.
+     */
     private void onDigitNumberButtonClicked(String number) throws NumberFormatException {
         if (!TextUtils.isEmpty(mVarA)) {
             if (Double.parseDouble(mVarA) == 0 && Double.parseDouble(number) == 0) {
@@ -128,6 +145,9 @@ public class MainActivity extends AppCompatActivity implements
         displayInput();
     }
 
+    /**
+     * Handle click event when user click on operator button
+     */
     private void onOperatorClicked() {
         mCalculation.setEOperator(Calculation.EOperator.from(mOperator));
         mCalculation.setVarTemp(mCalculation.getResult());
@@ -135,17 +155,15 @@ public class MainActivity extends AppCompatActivity implements
         mVarA = "";
 
         double result = mCalculation.getResult();
-        if (NumberUtils.isIntegerNumber(result)) {
-            // cast to integer type
-            displayCalculation = (int) result + mOperator;
-        } else {
-            displayCalculation = result + mOperator;
-        }
-        // Store the first expression, for later use.
-        storeFirstString = displayCalculation;
+        displayCalculation = NumberUtils.formatNumber(result) + mOperator;
+        storeFirstExpression = displayCalculation;
         displayInput();
     }
 
+    /**
+     * Handle when user click on +/- button to toggle the sign of a number
+     * In case of positive or negative sign
+     */
     private void onToggleSignNumber() {
         if (!TextUtils.isEmpty(mVarA)) {
             try {
@@ -161,14 +179,18 @@ public class MainActivity extends AppCompatActivity implements
                 }
                 doCalculation();
                 // update new expression
-                displayCalculation = storeFirstString + mVarA;
+                displayCalculation = storeFirstExpression + NumberUtils.formatNumber(Double.parseDouble(mVarA));
                 displayInput();
             } catch (NumberFormatException e) {
+                onError(e.getMessage());
                 e.printStackTrace();
             }
         }
     }
 
+    /**
+     * Handle when user click on comma button
+     */
     private void onCommaButtonClicked() {
         if (!TextUtils.isEmpty(mVarA)) {
             mVarA += ".";
@@ -182,42 +204,59 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void onEqualClicked() {
+        mVarA = NumberUtils.formatNumber(mCalculation.getResult());
 
-        if (NumberUtils.isIntegerNumber(mCalculation.getResult())) {
-            mVarA = String.valueOf((int) mCalculation.getResult());
-        } else {
-            mVarA = String.valueOf(mCalculation.getResult());
-        }
+        // When we press equal button, that means we show the result of the last expression
+        // And also reset some variable as a new one
         displayCalculation = mVarA;
-        storeFirstString = "";
-        mInputTV.setText(mVarA);
+        storeFirstExpression = "";
         mCalculation.setEOperator(Calculation.EOperator.DEFAULT);
+
+        mInputTV.setText(mVarA);
     }
 
     /* End of onClick methods */
 
+    /**
+     * This method is for showing user's input or expression on the screen by setting text for the TextView
+     */
     private void displayInput() {
         mInputTV.setText(displayCalculation);
     }
 
+    /**
+     * This method is for doing calculation
+     */
     private void doCalculation() {
         mCalculation.setVarA(mVarA);
         mCalculation.doCalculation();
     }
 
+
+    /* All methods below are callbacks from Calculation to MainActivity */
+
+    /**
+     * When calculation is finished and ready to show on the screen. Calculation class will do the callback out there
+     */
     @Override
     public void showResult(String result) {
         mResultTV.setText("Result: " + result);
     }
 
+    /**
+     * Whenever calculation is not valid. Calculation class will callback there
+     */
     @Override
     public void onError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * When user click on AC (All clear), so Calculation instance will clear all its data, and callback there
+     */
     @Override
     public void onReset() {
-        storeFirstString = "";
+        storeFirstExpression = "";
         mOperator = "";
         displayCalculation = "";
         mVarA = "";
