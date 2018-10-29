@@ -2,6 +2,11 @@
 
 This a very simple Android Calculator app which I created to learn the basics of Android App Development.
 
+![portrait](https://github.com/trungnguyen22/android-Calculator/blob/master/art/pic1.PNG)
+![landscape](https://github.com/trungnguyen22/android-Calculator/blob/master/art/pic2.PNG)
+
+
+
 ## Getting Started
 
 ### Features:
