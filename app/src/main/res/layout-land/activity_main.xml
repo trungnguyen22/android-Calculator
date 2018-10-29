@@ -114,6 +114,20 @@
                     android:text="@string/divider_" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mSqrtBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_orange_selector"
+                    android:tag="*"
+                    android:text="@string/sqrt_sym" />
+            </LinearLayout>
+
         </LinearLayout>
         <!-- /.End of first row -->
 
@@ -183,6 +197,20 @@
                     android:text="@string/mul_x" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mLogBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_orange_selector"
+                    android:tag="*"
+                    android:text="@string/log10" />
+            </LinearLayout>
+
         </LinearLayout>
         <!-- /. End of second row -->
 
@@ -248,6 +276,20 @@
                     android:background="@drawable/rect_button_orange_selector"
                     android:tag="-"
                     android:text="@string/minus" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mSinBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_orange_selector"
+                    android:tag="*"
+                    android:text="@string/sin" />
             </LinearLayout>
 
 
@@ -317,6 +359,20 @@
                     android:text="@string/plus" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/mCosBtn"
+                    style="@style/CalcButtonStyle.TextColorWhite"
+                    android:background="@drawable/rect_button_orange_selector"
+                    android:tag="*"
+                    android:text="@string/cos" />
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -331,7 +387,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
+                android:layout_weight="4"
                 android:gravity="center">
 
                 <Button
@@ -348,7 +404,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
+                android:layout_weight="6"
                 android:baselineAligned="false">
 
                 <LinearLayout
@@ -377,6 +433,20 @@
                         style="@style/CalcButtonStyle.TextColorWhite"
                         android:background="@drawable/rect_button_orange_selector"
                         android:text="@string/equal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/mTanBtn"
+                        style="@style/CalcButtonStyle.TextColorWhite"
+                        android:background="@drawable/rect_button_orange_selector"
+                        android:tag="*"
+                        android:text="@string/tan" />
                 </LinearLayout>
 
 

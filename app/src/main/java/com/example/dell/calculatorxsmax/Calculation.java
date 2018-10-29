@@ -2,116 +2,105 @@ package com.example.dell.calculatorxsmax;
 
 import android.text.TextUtils;
 
-public class Calculation {
-    private double mVarTemp;
-    private double mVarA;
+class Calculation {
+    private double mFirst;
+    private double mSecond;
     private double mResult;
     private EOperator mEOperator;
-    private boolean isReadyForCalculation;
 
     private CalculationCallBack mCalculationCallBack;
 
-    public Calculation() {
-        this.mVarA = 0;
+    Calculation() {
+        this.mFirst = 0;
+        this.mSecond = 0;
         this.mResult = 0;
         this.mEOperator = EOperator.DEFAULT;
     }
 
-    public double getVarA() {
-        return mVarA;
+    String getFirstAsString() {
+        if (NumberUtils.isIntegerNumber(mFirst)) {
+            return String.valueOf((int) mFirst);
+        } else {
+            return String.valueOf(mFirst);
+        }
     }
 
-    public void setVarA(double varA) {
-        mVarA = varA;
-    }
-
-    public void setVarA(String varA) {
+    void setFirst(String first) {
         try {
-            this.mVarA = Double.parseDouble(varA);
+            this.mFirst = Double.parseDouble(first);
         } catch (NumberFormatException e) {
             mCalculationCallBack.onError(e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public double getResult() {
-        return mResult;
+    void setSecond(String second) {
+        try {
+            this.mSecond = Double.parseDouble(second);
+        } catch (NumberFormatException e) {
+            mCalculationCallBack.onError(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    public void setResult(double result) {
-        mResult = result;
-    }
-
-    public double getVarTemp() {
-        return mVarTemp;
-    }
-
-    public void setVarTemp(double varTemp) {
-        mVarTemp = varTemp;
-    }
-
-    public EOperator getEOperator() {
+    EOperator getEOperator() {
         return mEOperator;
     }
 
-    public void setEOperator(EOperator EOperator) {
+    void setEOperator(EOperator EOperator) {
         mEOperator = EOperator;
     }
 
-    /* End getter & setter methods */
-
-    public boolean isReadyForCalculation() {
-        return isReadyForCalculation;
-    }
-
-    public void setReadyForCalculation(boolean readyForCalculation) {
-        isReadyForCalculation = readyForCalculation;
-    }
-
-    public CalculationCallBack getCalculationCallBack() {
-        return mCalculationCallBack;
-    }
-
-    public void setCalculationCallBack(CalculationCallBack calculationCallBack) {
+    void setCalculationCallBack(CalculationCallBack calculationCallBack) {
         mCalculationCallBack = calculationCallBack;
     }
 
-    public void doCalculation() throws NumberFormatException {
+    void doCalculation() throws NumberFormatException {
         switch (mEOperator) {
             case PLUS:
-                mResult = mVarTemp + mVarA;
+                mResult = mFirst + mSecond;
                 break;
             case MINUS:
-                mResult = mVarTemp - mVarA;
+                mResult = mFirst - mSecond;
                 break;
             case MUL:
-                mResult = mVarTemp * mVarA;
+                mResult = mFirst * mSecond;
                 break;
             case DIVISION:
-                if (mVarA != 0) {
-                    mResult = mVarTemp / mVarA;
+                if (mSecond != 0) {
+                    mResult = mFirst / mSecond;
                 } else {
                     mCalculationCallBack.onError("You can't divide by 0");
                 }
                 break;
             case PERCENTAGE:
-                if (mVarA != 0) {
-                    mResult = mVarTemp % mVarA;
+                if (mSecond != 0) {
+                    mResult = mFirst % mSecond;
                 } else {
                     mCalculationCallBack.onError("You can't divide by 0");
                 }
                 break;
-            default:
-                mVarTemp = mVarA;
-                mResult = mVarA;
-                return;
+            case SQRT:
+                if (mFirst != -1) {
+                    mResult = Math.sqrt(mFirst);
+                } else {
+                    mCalculationCallBack.onError("You can't not √(-1)");
+                }
         }
-        if (mResult != mVarA)
-            mCalculationCallBack.showResult(String.valueOf(mResult));
+        doStuffAfterCalculation();
     }
 
-    public void resetAll() {
-        mVarA = 0;
+    private void doStuffAfterCalculation() {
+        mFirst = mResult;
+        mResult = 0;
+        mSecond = 0;
+        mEOperator = EOperator.DEFAULT;
+        mCalculationCallBack.showResult(NumberUtils.formatNumber(mFirst));
+    }
+
+    void resetAll() {
+        mFirst = 0;
+        mSecond = 0;
         mResult = 0;
         mEOperator = EOperator.DEFAULT;
         mCalculationCallBack.onReset();
@@ -123,7 +112,8 @@ public class Calculation {
         MINUS("-"),
         DIVISION("÷"),
         MUL("×"),
-        PERCENTAGE("%");
+        PERCENTAGE("%"),
+        SQRT("√");
 
         String type;
 
@@ -150,5 +140,4 @@ public class Calculation {
             return DEFAULT;
         }
     }
-
 }
