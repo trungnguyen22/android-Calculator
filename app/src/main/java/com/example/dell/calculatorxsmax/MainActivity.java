@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements
         onLandscapeMode();
     }
 
+    /**
+     * Handle when rotate device horizontally
+     * */
     private void onLandscapeMode() {
         if (findViewById(R.id.mSqrtBtn) != null) {
             findViewById(R.id.mSqrtBtn).setOnClickListener(new View.OnClickListener() {
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    /**  initialization properties */
     private void initData() {
         first = "";
         second = "";
@@ -109,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    /** find view by id */
     private void bindViews() {
         mInputTV = findViewById(R.id.mInPutTV);
         mResultTV = findViewById(R.id.mResultTV);
@@ -122,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    /** return a string which was format */
     public String getFormatFirst() {
         try {
             double dFirst = Double.parseDouble(first);
@@ -202,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements
         displayInput();
     }
 
+    /** Handle when click on digit number button */
     private void onDigitNumberButtonClicked(String number) {
         if (!isStartingInsertForSecond) {
             if (first.equals("0") && number.equals("0")) return;
@@ -213,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    /** Handle when click on operator button */
     private void onOperatorButtonClicked(String operator) {
         if (!isStartingInsertForSecond) {
             mCalculation.setFirst(first);
@@ -224,6 +232,7 @@ public class MainActivity extends AppCompatActivity implements
         isStartingInsertForSecond = true;
     }
 
+    /** Handle when click on dot button */
     private void onDotButtonClicked() {
         String dot = ".";
         if (!isStartingInsertForSecond) {
@@ -259,6 +268,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    /** Handle when click on +/- button */
     private boolean onSignToggleButtonClicked() {
         if (!isStartingInsertForSecond) {
             if (TextUtils.isEmpty(first)) return true;
@@ -272,6 +282,7 @@ public class MainActivity extends AppCompatActivity implements
         return false;
     }
 
+    /** Do calculation */
     private void doCalculation() {
         mCalculation.setSecond(second);
         mCalculation.doCalculation();
@@ -293,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-
+    /** Callback from Calculation */
     @Override
     public void showResult(String result) {
         mResultTV.setText(String.valueOf("Result: " + result));
