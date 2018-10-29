@@ -208,7 +208,8 @@
                     style="@style/CalcButtonStyle.TextColorWhite"
                     android:background="@drawable/rect_button_orange_selector"
                     android:tag="*"
-                    android:text="@string/log10" />
+                    android:text="@string/update_soon"
+                    android:textSize="12sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -289,7 +290,8 @@
                     style="@style/CalcButtonStyle.TextColorWhite"
                     android:background="@drawable/rect_button_orange_selector"
                     android:tag="*"
-                    android:text="@string/sin" />
+                    android:text="@string/update_soon"
+                    android:textSize="12sp" />
             </LinearLayout>
 
 
@@ -370,7 +372,8 @@
                     style="@style/CalcButtonStyle.TextColorWhite"
                     android:background="@drawable/rect_button_orange_selector"
                     android:tag="*"
-                    android:text="@string/cos" />
+                    android:text="@string/update_soon"
+                    android:textSize="12sp" />
             </LinearLayout>
 
 
@@ -446,7 +449,8 @@
                         style="@style/CalcButtonStyle.TextColorWhite"
                         android:background="@drawable/rect_button_orange_selector"
                         android:tag="*"
-                        android:text="@string/tan" />
+                        android:text="@string/update_soon"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
 

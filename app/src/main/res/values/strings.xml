@@ -50,6 +50,7 @@
     <string name="all_clear" translatable="false">AC</string>
     <string name="positive_negative_toggle">+/-</string>
     <string name="comma">.</string>
+    <string name="update_soon">Update Soon</string>
 
 
 </resources>
